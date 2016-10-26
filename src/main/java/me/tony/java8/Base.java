@@ -12,7 +12,7 @@ import java.util.function.Supplier;
  * Created by tony on 2016/10/24.
  */
 public class Base {
-    protected static transient final Logger logger = LoggerFactory.getLogger("Learn Java8");
+    protected static transient final Logger logger = LoggerFactory.getLogger("Java8Practice");
 
     protected static void showInteger(IntFunction<Integer> function, int value) {
         logger.info(String.valueOf(function.apply(value)));
@@ -24,5 +24,13 @@ public class Base {
 
     protected static String task(Supplier<String> supplier) throws Exception {
         return supplier.get();
+    }
+
+    protected static boolean isOddInteger(int i) {
+        return i % 2 == 1;
+    }
+
+    protected static boolean isEvenInteger(int i) {
+        return i % 2 == 0;
     }
 }

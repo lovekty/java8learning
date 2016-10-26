@@ -4,8 +4,11 @@ import me.tony.java8.Base;
 import org.junit.Test;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 
@@ -28,7 +31,7 @@ public class LambdaExamples extends Base {
 //        Thread t = new Thread(new Runnable() {
 //            @Override
 //            public void run() {
-//                logger.info("hello lambda")
+//                logger.info("hello lambda");
 //            }
 //        });
         t.start();
@@ -76,6 +79,9 @@ public class LambdaExamples extends Base {
         showInteger(Math::abs, -1);
         showInteger(integer -> integer * 2, 128);
         showInteger(haha -> haha + 100, 99);
+//        Supplier<List> listSupplier = ArrayList::new;
+//        Function<Integer, String[]> stringArrayFunction = String[]::new;
+
     }
 
     /**
