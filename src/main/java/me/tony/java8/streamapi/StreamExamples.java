@@ -74,15 +74,15 @@ public class StreamExamples extends Base {
     public void doubleIntegers() {
         List<Integer> doubleIntegers = new ArrayList<>(SIZE);
         long start = System.nanoTime();
-//        doubleIntegers.addAll(integers.stream().map(integer -> integer * 2).collect(Collectors.toList()));
-        doubleIntegers.addAll(integers.stream().map(integer -> {
-            try {
-                Thread.sleep(0, 10);
-            } catch (InterruptedException e) {
-                logger.debug("sleep error", e);
-            }
-            return integer * 2;
-        }).collect(Collectors.toList()));
+        doubleIntegers.addAll(integers.stream().map(integer -> integer * 2).collect(Collectors.toList()));
+//        doubleIntegers.addAll(integers.stream().map(integer -> {
+//            try {
+//                Thread.sleep(0, 10);
+//            } catch (InterruptedException e) {
+//                logger.debug("sleep error", e);
+//            }
+//            return integer * 2;
+//        }).collect(Collectors.toList()));
         long end = System.nanoTime();
         logger.info("result size is:{} and cost time:{}ms", doubleIntegers.size(), TimeUnit.NANOSECONDS.toMillis(end - start));
     }
@@ -91,15 +91,15 @@ public class StreamExamples extends Base {
     public void parallelDoubleIntegers() {
         List<Integer> doubleIntegers = new ArrayList<>(SIZE);
         long start = System.nanoTime();
-//        doubleIntegers.addAll(integers.parallelStream().map(integer -> integer * 2).collect(Collectors.toList()));
-        doubleIntegers.addAll(integers.parallelStream().map(integer -> {
-            try {
-                Thread.sleep(0, 10);
-            } catch (InterruptedException e) {
-                logger.debug("sleep error", e);
-            }
-            return integer * 2;
-        }).collect(Collectors.toList()));
+        doubleIntegers.addAll(integers.parallelStream().map(integer -> integer * 2).collect(Collectors.toList()));
+//        doubleIntegers.addAll(integers.parallelStream().map(integer -> {
+//            try {
+//                Thread.sleep(0, 10);
+//            } catch (InterruptedException e) {
+//                logger.debug("sleep error", e);
+//            }
+//            return integer * 2;
+//        }).collect(Collectors.toList()));
         long end = System.nanoTime();
         logger.info("result size is:{} and cost time:{}ms", doubleIntegers.size(), TimeUnit.NANOSECONDS.toMillis(end - start));
     }
