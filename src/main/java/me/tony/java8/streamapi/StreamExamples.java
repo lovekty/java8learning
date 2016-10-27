@@ -17,7 +17,7 @@ import java.util.stream.Stream;
  */
 public class StreamExamples extends Base {
 
-    static final int SIZE = 10_000;
+    static final int SIZE = 10_000_000;
     static List<Student> students = Arrays.asList(new Student("1001", "Bob", Student.Gender.MALE, 3.7f),
             new Student("1002", "Tom", Student.Gender.MALE, 4.2f), new Student("1003", "John", Student.Gender.MALE, 4.4f),
             new Student("1004", "Mary", Student.Gender.FEMAIL, 4.9f), new Student("1005", "Lily", Student.Gender.FEMAIL, 4.0f),
@@ -77,6 +77,16 @@ public class StreamExamples extends Base {
     }
 
     /**
+     * 对一个Stream使用terminal操作以后继续使用
+     */
+    @Test
+    public void useStreamAfterTerminal() {
+        IntStream stream = IntStream.rangeClosed(1, 100);
+        List<Integer> integers = stream.map(i -> i * 2).collect(() -> new ArrayList<Integer>(100), ArrayList::add, ArrayList::addAll);
+        stream.forEach(integer -> logger.info("{}", integer));
+    }
+
+    /**
      * 将一个列表的整型数字乘2
      */
     @Test
@@ -121,6 +131,7 @@ public class StreamExamples extends Base {
     /**
      * 并行流使用ForkJoinPool.commonPool，多个并行流之间会互相影响
      * 对于非计算密集型的并行流的任务，建议采用自定义的ForkJoinPool
+     *
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -242,6 +253,16 @@ public class StreamExamples extends Base {
     public void boysAverageGpa() {
         double average = students.stream().filter(student -> student.gender == Student.Gender.MALE).mapToDouble(Student::getGpa).reduce((a, b) -> (a + b) / 2).orElse(-1.0);
         logger.info("boys average gpa is:{}", average);
+    }
+
+    /**
+     * 并行流无序性
+     */
+    @Test
+    public void parallelStreamIsUnordered() {
+        IntStream stream = IntStream.rangeClosed(1, 10);
+        stream.forEach(integer -> logger.info("{}", integer));
+//        stream.parallel().forEach(integer -> logger.info("{}", integer));
     }
 
 }
