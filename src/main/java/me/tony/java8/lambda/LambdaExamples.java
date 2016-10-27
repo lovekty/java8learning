@@ -4,11 +4,8 @@ import me.tony.java8.Base;
 import org.junit.Test;
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 
@@ -39,6 +36,7 @@ public class LambdaExamples extends Base {
 
     /**
      * lambda和匿名内部类的区别
+     * getClass()不一样，二进制文件也不一样，并不是语法糖
      */
     @Test
     public void typeOfLambda() {
@@ -55,15 +53,15 @@ public class LambdaExamples extends Base {
     }
 
     /**
-     * lambda表达式的作用域
+     * lambda和匿名内部类的区别
+     * lambda表达式的作用域 与外部环境一样
+     * 内部类则创建了一个新的作用域
      */
     @Test
     public void testScope() {
         ScopeTest st = new ScopeTest();
-        st.c1.accept(logger);
-        st.c2.accept(logger);
-        st.c3.accept(logger);
-        st.c4.accept(logger);
+        st.printThis.accept(logger);
+        st.printToString.accept(logger);
     }
 
     /**
@@ -109,30 +107,20 @@ public class LambdaExamples extends Base {
 
 
 class ScopeTest {
-    Consumer<Logger> c1 = logger -> logger.info("{}", this);
-    Consumer<Logger> c2 = new Consumer<Logger>() {
-        @Override
-        public void accept(Logger logger) {
-            logger.info("{}", this);
-        }
-
-        @Override
-        public String toString() {
-            return "hello world in consumer";
-        }
-    };
-    Consumer<Logger> c3 = logger -> logger.info(toString());
-    Consumer<Logger> c4 = new Consumer<Logger>() {
-        @Override
-        public void accept(Logger logger) {
-            logger.info(toString());
-        }
-
-        @Override
-        public String toString() {
-            return "hello world in consumer";
-        }
-    };
+    Consumer<Logger> printThis = logger -> logger.info("{}", this);
+    Consumer<Logger> printToString = logger -> logger.info("{}", toString());
+//    Consumer<Logger> printThis = new Consumer<Logger>() {
+//        @Override
+//        public void accept(Logger logger) {
+//            logger.info("{}", this);
+//        }
+//    };
+//    Consumer<Logger> printToString = new Consumer<Logger>() {
+//        @Override
+//        public void accept(Logger logger) {
+//            logger.info("{}", toString());
+//        }
+//    };
 
     @Override
     public String toString() {

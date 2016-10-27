@@ -40,6 +40,7 @@ public class StreamExamples extends Base {
 
     /**
      * String Array filter
+     * 过滤String数组中的空值
      */
     @Test
     public void rebuildStringArray() {
@@ -60,16 +61,22 @@ public class StreamExamples extends Base {
 
     }
 
+    /**
+     * 取偶数
+     */
     @Test
     public void pickEvenNumber() {
-//        long start = System.currentTimeMillis();
+        long start = System.nanoTime();
 //        List<Integer> evenNumbers = integers.stream().filter(Base::isEvenInteger).collect(Collectors.toList());
-//        long end = System.currentTimeMillis();
         List<Integer> evenNumbers = new ArrayList<>(integers.size());
         evenNumbers.addAll(integers.stream().filter(Base::isEvenInteger).collect(Collectors.toList()));
-        logger.info("Even Number size:{}", evenNumbers.size());
+        long end = System.nanoTime();
+        logger.info("Even Number size:{}, cost time:{}ms", evenNumbers.size(), TimeUnit.NANOSECONDS.toMillis(end - start));
     }
 
+    /**
+     * 将一个列表的整型数字乘2
+     */
     @Test
     public void doubleIntegers() {
         List<Integer> doubleIntegers = new ArrayList<>(SIZE);
@@ -87,6 +94,11 @@ public class StreamExamples extends Base {
         logger.info("result size is:{} and cost time:{}ms", doubleIntegers.size(), TimeUnit.NANOSECONDS.toMillis(end - start));
     }
 
+    /**
+     * 用并行流将一个列表的整型数字乘2
+     * 一开始会发现并行流效率反而不如串行流
+     * 每次操作睡10纳秒模拟cpu密集型计算任务，并行流优势明显
+     */
     @Test
     public void parallelDoubleIntegers() {
         List<Integer> doubleIntegers = new ArrayList<>(SIZE);
@@ -104,6 +116,9 @@ public class StreamExamples extends Base {
         logger.info("result size is:{} and cost time:{}ms", doubleIntegers.size(), TimeUnit.NANOSECONDS.toMillis(end - start));
     }
 
+    /**
+     * 利用Comparator排序，千万不要用并行流
+     */
     @Test
     public void sort() {
         List<Integer> orderedIntegers = new ArrayList<>(SIZE);
@@ -113,6 +128,9 @@ public class StreamExamples extends Base {
         logger.info("result size is:{} and cost time:{}ms", orderedIntegers.size(), TimeUnit.NANOSECONDS.toMillis(end - start));
     }
 
+    /**
+     * 寻找一个很长的整型数字列表中的最大值，预先知道最大值为{@code Integer.MAX_VALUE}
+     */
     @Test
     public void max() {
         long start = System.nanoTime();
@@ -121,6 +139,9 @@ public class StreamExamples extends Base {
         logger.info("max is:{} and cost time:{}ms", max, TimeUnit.NANOSECONDS.toMillis(end - start));
     }
 
+    /**
+     * 并行流查找最大值
+     */
     @Test
     public void parallelMax() {
         long start = System.nanoTime();
@@ -129,6 +150,10 @@ public class StreamExamples extends Base {
         logger.info("max is:{} and cost time:{}ms", max, TimeUnit.NANOSECONDS.toMillis(end - start));
     }
 
+    /**
+     * 集合转换
+     * 注意用并行流转map的时候需要用concurrent
+     */
     @Test
     public void studentsToMap() {
 //        Map<String, Student> map = students.stream().collect(Collectors.toMap(student -> student.stuId, student -> student, (left, right) -> left));
@@ -136,12 +161,18 @@ public class StreamExamples extends Base {
         logger.info(String.valueOf(map.get("1008")));
     }
 
+    /**
+     * 排序
+     */
     @Test
     public void sortByGpa() {
         List<Student> sorted = students.stream().sorted((a, b) -> Double.compare(a.getGpa(), b.getGpa())).collect(Collectors.toList());
         printStudents(sorted);
     }
 
+    /**
+     * 集合数据操作
+     */
     @Test
     public void setTitle() {
         long start = System.nanoTime();
@@ -164,6 +195,9 @@ public class StreamExamples extends Base {
         printStudents(result);
     }
 
+    /**
+     * 求平均数
+     */
     @Test
     public void averageGpa() {
         long start = System.nanoTime();
@@ -185,14 +219,6 @@ public class StreamExamples extends Base {
         logger.info("boys average gpa is:{}", average);
     }
 
-//    @Test
-//    public void pickEvenNumberParallel() {
-//        List<Integer> integers = IntStream.rangeClosed(1, 10000000).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
-//        long start = System.currentTimeMillis();
-//        List<Integer> evenNumbers = integers.parallelStream().filter(Base::isEvenInteger).collect(Collectors.toList());
-//        long end = System.currentTimeMillis();
-//        logger.info("Even Number size:{}, time cose:{}ms by parallel stream", evenNumbers.size(), end - start);
-//    }
 }
 
 class Student {
