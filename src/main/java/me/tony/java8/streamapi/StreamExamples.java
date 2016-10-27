@@ -5,13 +5,15 @@ import org.junit.Test;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
- * Created by tony on 2016/10/26.
+ * Stream API示例
  */
 public class StreamExamples extends Base {
 
@@ -117,15 +119,38 @@ public class StreamExamples extends Base {
     }
 
     /**
-     * 利用Comparator排序，千万不要用并行流
+     * 并行流使用ForkJoinPool.commonPool，多个并行流之间会互相影响
+     * 对于非计算密集型的并行流的任务，建议采用自定义的ForkJoinPool
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    @Test
+    public void customForkJoinPool() throws ExecutionException, InterruptedException {
+        final List<Integer> doubleIntegers = new ArrayList<>(SIZE);
+        ForkJoinPool forkJoinPool = new ForkJoinPool(2);
+        long start = System.nanoTime();
+        forkJoinPool.submit(() -> doubleIntegers.addAll(integers.parallelStream().map(integer -> {
+            try {
+                Thread.sleep(0, 10);
+            } catch (InterruptedException e) {
+                logger.error("sleep error", e);
+            }
+            return integer * 2;
+        }).collect(Collectors.toList()))).invoke();
+        long end = System.nanoTime();
+        logger.info("result size is:{} and cost time:{}ms", doubleIntegers.size(), TimeUnit.NANOSECONDS.toMillis(end - start));
+    }
+
+    /**
+     * 利用Comparator排序
      */
     @Test
     public void sort() {
         List<Integer> orderedIntegers = new ArrayList<>(SIZE);
         long start = System.nanoTime();
-        orderedIntegers.addAll(unorderedIntegers.stream().sorted().collect(Collectors.toList()));
+        orderedIntegers.addAll(unorderedIntegers.parallelStream().sorted().collect(Collectors.toList()));
         long end = System.nanoTime();
-        logger.info("result size is:{} and cost time:{}ms", orderedIntegers.size(), TimeUnit.NANOSECONDS.toMillis(end - start));
+        logger.info("result size is:{} and cost time:{}ms, first is:{}, last is:{}", orderedIntegers.size(), TimeUnit.NANOSECONDS.toMillis(end - start), orderedIntegers.get(0), orderedIntegers.get(orderedIntegers.size() - 1));
     }
 
     /**
