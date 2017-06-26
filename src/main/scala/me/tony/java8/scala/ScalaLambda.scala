@@ -8,14 +8,10 @@ class ScalaLambda {
   }
 
   val function: (String) => String = (param: String) => param
-}
-
-object ScalaLambda {
 
   @Test
   def showFunction: Unit = {
-    val ins = new ScalaLambda
-//    println(classOf[ins.function])
+    println(this.function)
   }
-
 }
+
