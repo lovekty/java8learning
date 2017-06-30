@@ -42,10 +42,10 @@ public class RepeatableAnnotationExamples extends Base {
     @Test
     public void testRepeatableAnnotation() {
         Prop[] propArray = UseRepeatableAnnotation.class.getAnnotationsByType(Prop.class);
-        Arrays.stream(propArray).forEach(prop -> logger.info("prop value is:{}", prop.value()));
+        Arrays.stream(propArray).forEach(prop -> LOGGER.info("prop value is:{}", prop.value()));
 
         Props props = UseRepeatableAnnotation.class.getAnnotation(Props.class);
-        Arrays.stream(props.value()).forEach(prop -> logger.info("prop value is:{}", prop.value()));
+        Arrays.stream(props.value()).forEach(prop -> LOGGER.info("prop value is:{}", prop.value()));
     }
 
     /**
@@ -54,9 +54,9 @@ public class RepeatableAnnotationExamples extends Base {
     @Test
     public void useContainer() {
         Prop[] propArray = UseContainerAnnotation.class.getAnnotationsByType(Prop.class);
-        Arrays.stream(propArray).forEach(prop -> logger.info("prop value is:{}", prop.value()));
+        Arrays.stream(propArray).forEach(prop -> LOGGER.info("prop value is:{}", prop.value()));
         
         Props props = UseContainerAnnotation.class.getAnnotation(Props.class);
-        Arrays.stream(props.value()).forEach(prop -> logger.info("prop value is:{}", prop.value()));
+        Arrays.stream(props.value()).forEach(prop -> LOGGER.info("prop value is:{}", prop.value()));
     }
 }

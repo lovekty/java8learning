@@ -37,7 +37,7 @@ public class StreamExamples extends Base {
     }
 
     static void printStudents(List<Student> students) {
-        students.forEach(student -> logger.info(student.toString()));
+        students.forEach(student -> LOGGER.info(student.toString()));
     }
 
     /**
@@ -58,8 +58,8 @@ public class StreamExamples extends Base {
 //        String[] result = Arrays.copyOf(mid, num);
         String[] result = Arrays.stream(orig).filter(s -> s != null && !s.isEmpty()).toArray(String[]::new);
 
-        logger.info("result length is:{}", result.length);
-        Arrays.stream(result).forEach(logger::info);
+        LOGGER.info("result length is:{}", result.length);
+        Arrays.stream(result).forEach(LOGGER::info);
 
     }
 
@@ -73,7 +73,7 @@ public class StreamExamples extends Base {
         List<Integer> evenNumbers = new ArrayList<>(integers.size());
         evenNumbers.addAll(integers.stream().filter(Base::isEvenInteger).collect(Collectors.toList()));
         long end = System.nanoTime();
-        logger.info("Even Number size:{}, cost time:{}ms", evenNumbers.size(), TimeUnit.NANOSECONDS.toMillis(end - start));
+        LOGGER.info("Even Number size:{}, cost time:{}ms", evenNumbers.size(), TimeUnit.NANOSECONDS.toMillis(end - start));
     }
 
     /**
@@ -83,7 +83,7 @@ public class StreamExamples extends Base {
     public void useStreamAfterTerminal() {
         IntStream stream = IntStream.rangeClosed(1, 100);
         List<Integer> integers = stream.map(i -> i * 2).collect(() -> new ArrayList<Integer>(100), ArrayList::add, ArrayList::addAll);
-        stream.forEach(integer -> logger.info("{}", integer));
+        stream.forEach(integer -> LOGGER.info("{}", integer));
     }
 
     /**
@@ -98,12 +98,12 @@ public class StreamExamples extends Base {
 //            try {
 //                Thread.sleep(0, 10);
 //            } catch (InterruptedException e) {
-//                logger.debug("sleep error", e);
+//                LOGGER.debug("sleep error", e);
 //            }
 //            return integer * 2;
 //        }).collect(Collectors.toList()));
         long end = System.nanoTime();
-        logger.info("result size is:{} and cost time:{}ms", doubleIntegers.size(), TimeUnit.NANOSECONDS.toMillis(end - start));
+        LOGGER.info("result size is:{} and cost time:{}ms", doubleIntegers.size(), TimeUnit.NANOSECONDS.toMillis(end - start));
     }
 
     /**
@@ -120,12 +120,12 @@ public class StreamExamples extends Base {
 //            try {
 //                Thread.sleep(0, 10);
 //            } catch (InterruptedException e) {
-//                logger.debug("sleep error", e);
+//                LOGGER.debug("sleep error", e);
 //            }
 //            return integer * 2;
 //        }).collect(Collectors.toList()));
         long end = System.nanoTime();
-        logger.info("result size is:{} and cost time:{}ms", doubleIntegers.size(), TimeUnit.NANOSECONDS.toMillis(end - start));
+        LOGGER.info("result size is:{} and cost time:{}ms", doubleIntegers.size(), TimeUnit.NANOSECONDS.toMillis(end - start));
     }
 
     /**
@@ -144,12 +144,12 @@ public class StreamExamples extends Base {
             try {
                 Thread.sleep(0, 10);
             } catch (InterruptedException e) {
-                logger.error("sleep error", e);
+                LOGGER.error("sleep error", e);
             }
             return integer * 2;
         }).collect(Collectors.toList()))).invoke();
         long end = System.nanoTime();
-        logger.info("result size is:{} and cost time:{}ms", doubleIntegers.size(), TimeUnit.NANOSECONDS.toMillis(end - start));
+        LOGGER.info("result size is:{} and cost time:{}ms", doubleIntegers.size(), TimeUnit.NANOSECONDS.toMillis(end - start));
     }
 
     /**
@@ -161,7 +161,7 @@ public class StreamExamples extends Base {
         long start = System.nanoTime();
         orderedIntegers.addAll(unorderedIntegers.parallelStream().sorted().collect(Collectors.toList()));
         long end = System.nanoTime();
-        logger.info("result size is:{} and cost time:{}ms, first is:{}, last is:{}", orderedIntegers.size(), TimeUnit.NANOSECONDS.toMillis(end - start), orderedIntegers.get(0), orderedIntegers.get(orderedIntegers.size() - 1));
+        LOGGER.info("result size is:{} and cost time:{}ms, first is:{}, last is:{}", orderedIntegers.size(), TimeUnit.NANOSECONDS.toMillis(end - start), orderedIntegers.get(0), orderedIntegers.get(orderedIntegers.size() - 1));
     }
 
     /**
@@ -172,7 +172,7 @@ public class StreamExamples extends Base {
         long start = System.nanoTime();
         Integer max = unorderedIntegers.stream().max(Integer::compareTo).orElseGet(() -> null);
         long end = System.nanoTime();
-        logger.info("max is:{} and cost time:{}ms", max, TimeUnit.NANOSECONDS.toMillis(end - start));
+        LOGGER.info("max is:{} and cost time:{}ms", max, TimeUnit.NANOSECONDS.toMillis(end - start));
     }
 
     /**
@@ -183,7 +183,7 @@ public class StreamExamples extends Base {
         long start = System.nanoTime();
         Integer max = unorderedIntegers.parallelStream().max(Integer::compareTo).orElseGet(() -> null);
         long end = System.nanoTime();
-        logger.info("max is:{} and cost time:{}ms", max, TimeUnit.NANOSECONDS.toMillis(end - start));
+        LOGGER.info("max is:{} and cost time:{}ms", max, TimeUnit.NANOSECONDS.toMillis(end - start));
     }
 
     /**
@@ -194,7 +194,7 @@ public class StreamExamples extends Base {
     public void studentsToMap() {
 //        Map<String, Student> map = students.stream().collect(Collectors.toMap(student -> student.stuId, student -> student, (left, right) -> left));
         ConcurrentMap<String, Student> map = students.parallelStream().collect(Collectors.toConcurrentMap(student -> student.stuId, student -> student, (left, right) -> left));
-        logger.info(String.valueOf(map.get("1008")));
+        LOGGER.info(String.valueOf(map.get("1008")));
     }
 
     /**
@@ -226,7 +226,7 @@ public class StreamExamples extends Base {
 //            }
 //        });
         long end = System.nanoTime();
-        logger.info("set title cost time:{}ns", end - start);
+        LOGGER.info("set title cost time:{}ns", end - start);
         List<Student> result = students.stream().sorted((a, b) -> descFloatComparator.compare(a.getGpa(), b.getGpa())).collect(Collectors.toList());
         printStudents(result);
     }
@@ -245,14 +245,14 @@ public class StreamExamples extends Base {
 //        }
 //        average /= students.size();
         long end = System.nanoTime();
-        logger.info("set title cost time:{}ns", end - start);
-        logger.info("average gpa is:{}", average);
+        LOGGER.info("set title cost time:{}ns", end - start);
+        LOGGER.info("average gpa is:{}", average);
     }
 
     @Test
     public void boysAverageGpa() {
         double average = students.stream().filter(student -> student.gender == Student.Gender.MALE).mapToDouble(Student::getGpa).reduce((a, b) -> (a + b) / 2).orElse(-1.0);
-        logger.info("boys average gpa is:{}", average);
+        LOGGER.info("boys average gpa is:{}", average);
     }
 
     /**
@@ -261,8 +261,8 @@ public class StreamExamples extends Base {
     @Test
     public void parallelStreamIsUnordered() {
         IntStream stream = IntStream.rangeClosed(1, 10);
-        stream.forEach(integer -> logger.info("{}", integer));
-//        stream.parallel().forEach(integer -> logger.info("{}", integer));
+        stream.forEach(integer -> LOGGER.info("{}", integer));
+//        stream.parallel().forEach(integer -> LOGGER.info("{}", integer));
     }
 
 }

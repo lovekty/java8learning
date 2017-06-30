@@ -12,10 +12,10 @@ import java.util.function.Supplier;
  * Created by tony on 2016/10/24.
  */
 public class Base {
-    protected static transient final Logger logger = LoggerFactory.getLogger("Java8Practice");
+    protected static transient final Logger LOGGER = LoggerFactory.getLogger("Java8Practice");
 
     protected static void showInteger(IntFunction<Integer> function, int value) {
-        logger.info(String.valueOf(function.apply(value)));
+        LOGGER.info(String.valueOf(function.apply(value)));
     }
 
     protected static String task(Callable<String> callable) throws Exception {

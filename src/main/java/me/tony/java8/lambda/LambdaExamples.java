@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 public class LambdaExamples extends Base {
 
     static void invokeMyLambda(MyLambda lambda, int a, int b, int c) {
-        logger.info(String.valueOf(lambda.get(a, b, c)));
+        LOGGER.info(String.valueOf(lambda.get(a, b, c)));
     }
 
     /**
@@ -24,11 +24,11 @@ public class LambdaExamples extends Base {
      */
     @Test
     public void lambdaRunnable() {
-        Thread t = new Thread(() -> logger.info("hello lambda"));
+        Thread t = new Thread(() -> LOGGER.info("hello lambda"));
 //        Thread t = new Thread(new Runnable() {
 //            @Override
 //            public void run() {
-//                logger.info("hello lambda");
+//                LOGGER.info("hello lambda");
 //            }
 //        });
         t.start();
@@ -48,7 +48,7 @@ public class LambdaExamples extends Base {
 //
 //            }
 //        };
-        logger.info(runnable.getClass().getName());
+        LOGGER.info(runnable.getClass().getName());
 
     }
 
@@ -60,8 +60,8 @@ public class LambdaExamples extends Base {
     @Test
     public void testScope() {
         ScopeTest st = new ScopeTest();
-        st.printThis.accept(logger);
-        st.printToString.accept(logger);
+        st.printThis.accept(LOGGER);
+        st.printToString.accept(LOGGER);
     }
 
     /**
@@ -98,9 +98,9 @@ public class LambdaExamples extends Base {
      */
     @Test
     public void overloadingProblem() throws Exception {
-        logger.info(task((Callable<String>) () -> "Callable:hello lambda"));
-        logger.info(task((Supplier<String>) () -> "Supplier:hello lambda"));
-//        logger.info(task(()->"hello lambda"));
+        LOGGER.info(task((Callable<String>) () -> "Callable:hello lambda"));
+        LOGGER.info(task((Supplier<String>) () -> "Supplier:hello lambda"));
+//        LOGGER.info(task(()->"hello lambda"));
     }
 
 }
@@ -111,14 +111,14 @@ class ScopeTest {
     Consumer<Logger> printToString = logger -> logger.info("{}", toString());
 //    Consumer<Logger> printThis = new Consumer<Logger>() {
 //        @Override
-//        public void accept(Logger logger) {
-//            logger.info("{}", this);
+//        public void accept(Logger LOGGER) {
+//            LOGGER.info("{}", this);
 //        }
 //    };
 //    Consumer<Logger> printToString = new Consumer<Logger>() {
 //        @Override
-//        public void accept(Logger logger) {
-//            logger.info("{}", toString());
+//        public void accept(Logger LOGGER) {
+//            LOGGER.info("{}", toString());
 //        }
 //    };
 

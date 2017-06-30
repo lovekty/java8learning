@@ -19,16 +19,16 @@ public class JSR310Examples extends Base {
     @Test
     public void localDateExample() {
         LocalDate now = LocalDate.now();
-        logger.info("it is:{}", now);
+        LOGGER.info("it is:{}", now);
 
         LocalDate nowInLA = LocalDate.now(ZoneId.of("America/Los_Angeles"));
-        logger.info("it is:{} in LA", nowInLA);
+        LOGGER.info("it is:{} in LA", nowInLA);
 
         LocalDate myBirthday = LocalDate.of(1989, 6, 18);
-        logger.info("I was born on:{}", myBirthday);
+        LOGGER.info("I was born on:{}", myBirthday);
 
         LocalDate whenIWasTen = myBirthday.plus(10, ChronoUnit.YEARS);
-        logger.info("{} is my tenth birthday", whenIWasTen);
+        LOGGER.info("{} is my tenth birthday", whenIWasTen);
     }
 
     /**
@@ -37,16 +37,16 @@ public class JSR310Examples extends Base {
     @Test
     public void localTimeExample() {
         LocalTime now = LocalTime.now();
-        logger.info("it is:{} now", now);
+        LOGGER.info("it is:{} now", now);
 
         LocalTime nowInLA = LocalTime.now(ZoneId.of("America/Los_Angeles"));
-        logger.info("it is:{} now in LA", nowInLA);
+        LOGGER.info("it is:{} now in LA", nowInLA);
 
         LocalTime timeForLunch = LocalTime.of(12, 30);
-        logger.info("we have lunch at {}", timeForLunch);
+        LOGGER.info("we have lunch at {}", timeForLunch);
 
         LocalTime timeForSiesta = timeForLunch.plus(30, ChronoUnit.MINUTES);
-        logger.info("we have a nap at {}", timeForSiesta);
+        LOGGER.info("we have a nap at {}", timeForSiesta);
     }
 
     /**
@@ -55,14 +55,14 @@ public class JSR310Examples extends Base {
     @Test
     public void localDateTimeExample() {
         LocalDateTime now = LocalDateTime.now();
-        logger.info("it is:{} now", now);
+        LOGGER.info("it is:{} now", now);
         LocalDateTime nowInLA = LocalDateTime.now(ZoneId.of("America/Los_Angeles"));
-        logger.info("it is:{} now in LA", nowInLA);
+        LOGGER.info("it is:{} now in LA", nowInLA);
 
         LocalDate dateOfDoomsday = LocalDate.of(2012, 12, 21);
         LocalTime timeOfDoomsday = LocalTime.of(12, 0, 0);
         LocalDateTime doomsday = LocalDateTime.of(dateOfDoomsday, timeOfDoomsday);
-        logger.info("{} is the doomsday date in Mayan calendar", doomsday);
+        LOGGER.info("{} is the doomsday date in Mayan calendar", doomsday);
 
     }
 
@@ -72,7 +72,7 @@ public class JSR310Examples extends Base {
     @Test
     public void instantExample() {
         Instant now = Instant.now();
-        logger.info("it is:{} in instant style now", now.toEpochMilli());
+        LOGGER.info("it is:{} in instant style now", now.toEpochMilli());
     }
 
     /**
@@ -83,7 +83,7 @@ public class JSR310Examples extends Base {
         LocalDate iphone7 = LocalDate.of(2016, 9, 8);
         LocalDate mbp = LocalDate.of(2016, 10, 28);
         Period period = Period.between(iphone7, mbp);
-        logger.info("days between iphone7 and new macbook pro is {} months and {} days", period.getMonths(), period.getDays());
+        LOGGER.info("days between iphone7 and new macbook pro is {} months and {} days", period.getMonths(), period.getDays());
 
     }
 
@@ -94,7 +94,7 @@ public class JSR310Examples extends Base {
     public void formatToString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
-        logger.info(now.format(formatter));
+        LOGGER.info(now.format(formatter));
     }
 
     /**
@@ -104,7 +104,7 @@ public class JSR310Examples extends Base {
     public void parseFromString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime localDateTime = LocalDateTime.parse("2016-10-28 16:00:00", formatter);
-        logger.info("{}", localDateTime);
+        LOGGER.info("{}", localDateTime);
     }
 
     /**
@@ -116,7 +116,7 @@ public class JSR310Examples extends Base {
         ZonedDateTime zonedDateTime = now.atZone(ZoneId.systemDefault());
         Instant instant = zonedDateTime.toInstant();
         Date date = Date.from(instant);
-        logger.info("now in java.util.Date is:{}", date);
+        LOGGER.info("now in java.util.Date is:{}", date);
     }
 
     /**
@@ -128,7 +128,7 @@ public class JSR310Examples extends Base {
         Instant instant = now.toInstant();
         ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
         LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
-        logger.info("now in java.time.LocalDateTime is:{}", localDateTime);
+        LOGGER.info("now in java.time.LocalDateTime is:{}", localDateTime);
     }
 
 }

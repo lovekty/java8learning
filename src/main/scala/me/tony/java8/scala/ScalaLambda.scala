@@ -10,7 +10,7 @@ class ScalaLambda {
   val function: (String) => String = (param: String) => param
 
   @Test
-  def showFunction: Unit = {
+  def showFunction(): Unit = {
     println(this.function)
   }
 }
