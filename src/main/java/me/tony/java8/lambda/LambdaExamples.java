@@ -107,20 +107,20 @@ public class LambdaExamples extends Base {
 
 
 class ScopeTest {
-    Consumer<Logger> printThis = logger -> logger.info("{}", this);
-    Consumer<Logger> printToString = logger -> logger.info("{}", toString());
-//    Consumer<Logger> printThis = new Consumer<Logger>() {
-//        @Override
-//        public void accept(Logger LOGGER) {
-//            LOGGER.info("{}", this);
-//        }
-//    };
-//    Consumer<Logger> printToString = new Consumer<Logger>() {
-//        @Override
-//        public void accept(Logger LOGGER) {
-//            LOGGER.info("{}", toString());
-//        }
-//    };
+//    Consumer<Logger> printThis = logger -> logger.info("{}", this);
+//    Consumer<Logger> printToString = logger -> logger.info("{}", toString());
+    Consumer<Logger> printThis = new Consumer<Logger>() {
+        @Override
+        public void accept(Logger logger) {
+            logger.info("{}", this);
+        }
+    };
+    Consumer<Logger> printToString = new Consumer<Logger>() {
+        @Override
+        public void accept(Logger logger) {
+            logger.info("{}", toString());
+        }
+    };
 
     @Override
     public String toString() {
